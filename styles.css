@@ -13,40 +13,45 @@ body {
 }
 
 .container {
-    /* max-width: 800px; */ /* 최대 너비 제거하여 화면을 꽉 채움 */
-    margin: 0 auto; /* 좌우 여백 없이 중앙 정렬 */
-    padding: 0.5rem; /* 전체 컨테이너의 상하좌우 패딩 */
+    margin: 0 auto;
+    padding: 0.5vh 1vw; /* 세로 여백은 vh, 가로 여백은 vw로 조정 */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    width: 100%; /* 너비를 100%로 설정 */
+    width: 100%;
+    /* 세로 공간을 꽉 채우기 위한 추가 설정 */
+    min-height: calc(100vh - 1vh); /* body padding 고려 (0.5vh * 2) */
+    justify-content: space-between; /* 요소들 사이에 공간을 균등하게 배분 */
 }
 
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 0.8rem;
-    font-size: 1.4rem;
+    margin-bottom: 1.5vh; /* 세로 여백 증가 */
+    font-size: 5.5vw; /* 글자 크기 증가 */
 }
 
 .calendar-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.8rem;
+    gap: 2vw; /* 간격 조정 */
+    margin-bottom: 1.5vh; /* 세로 여백 증가 */
 }
 
 .calendar-controls button {
-    padding: 0.4rem;
-    font-size: 0.9rem;
+    padding: 1.5vh 2vw; /* 패딩 증가 */
+    font-size: 5vw; /* 글자 크기 증가 */
     border: none;
     background-color: #007bff;
     color: white;
     cursor: pointer;
     border-radius: 4px;
-    width: 35px;
-    height: 35px;
+    width: 12vw; /* 버튼 크기 증가 */
+    height: 6vh; /* 버튼 높이 증가 */
+    display: flex; /* 버튼 텍스트 중앙 정렬 */
+    justify-content: center;
+    align-items: center;
 }
 
 .calendar-controls button:hover {
@@ -54,9 +59,10 @@ h1 {
 }
 
 #currentMonth {
-    min-width: 110px;
+    min-width: 30vw; /* 너비 증가 */
     text-align: center;
-    font-size: 1rem;
+    font-size: 6vw; /* 글자 크기 증가 */
+    font-weight: bold;
 }
 
 .calendar {
@@ -64,6 +70,9 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    flex-grow: 1; /* 달력이 남은 공간을 차지하도록 설정 */
+    display: flex;
+    flex-direction: column;
 }
 
 .calendar-header {
@@ -77,8 +86,8 @@ h1 {
     text-align: center;
     font-weight: bold;
     color: #495057;
-    padding: 0.4rem;
-    font-size: 0.85rem;
+    padding: 1vh 0.5vw; /* 패딩 증가 */
+    font-size: 3.5vw; /* 글자 크기 증가 */
 }
 
 .calendar-header .weekend {
@@ -91,17 +100,21 @@ h1 {
     border-left: 2px solid #dee2e6;
     gap: 1px;
     background-color: #dee2e6;
+    flex-grow: 1; /* 날짜 칸들이 남은 세로 공간을 균등하게 차지 */
 }
 
 .calendar-day {
     background-color: white;
-    padding: 0.2rem;
-    min-height: 70px;
+    padding: 0.5vh 0.5vw; /* 패딩 조정 */
+    /* min-height는 없애고, flex-grow로 높이 자동 조절 */
     display: flex;
     flex-direction: column;
     border-right: 2px solid #dee2e6;
     border-bottom: 2px solid #dee2e6;
-    font-size: 0.8rem;
+    font-size: 3vw; /* 기본 폰트 크기 증가 */
+    flex-grow: 1; /* 각 날짜 칸이 세로 공간을 균등하게 차지 */
+    justify-content: flex-start; /* 내용을 상단에 배치 */
+    align-items: flex-start; /* 내용을 좌측에 배치 */
 }
 
 .calendar-day.weekend {
@@ -120,34 +133,39 @@ h1 {
 
 .date-number {
     font-weight: bold;
-    margin-bottom: 0.1rem;
-    font-size: 0.85rem;
+    margin-bottom: 0.5vh; /* 세로 여백 증가 */
+    font-size: 4vw; /* 글자 크기 증가 */
+    width: 100%; /* 너비 100%로 설정하여 가운데 정렬 용이 */
+    text-align: center; /* 날짜 숫자 가운데 정렬 */
 }
 
 .holiday-name {
-    font-size: 0.65rem;
+    font-size: 3vw; /* 글자 크기 증가 */
     color: #dc3545;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.5vh; /* 세로 여백 증가 */
+    width: 100%; /* 너비 100%로 설정하여 가운데 정렬 용이 */
+    text-align: center; /* 공휴일 이름 가운데 정렬 */
 }
 
 .shift-info {
-    font-size: 0.8rem;
+    font-size: 3.5vw; /* 글자 크기 증가 */
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    margin-top: auto;
+    gap: 0.5vh; /* 간격 증가 */
+    margin-top: auto; /* 하단에 배치 */
+    width: 100%; /* 너비 100%로 설정 */
 }
 
 .day-shift, .night-shift {
     color: white;
-    padding: 0.2rem;
+    padding: 0.5vh 0.5vw; /* 패딩 증가 */
     border-radius: 4px;
     text-align: center;
     width: 100%;
     position: relative;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
     transition: transform 0.1s ease, box-shadow 0.1s ease;
-    font-size: 0.75rem;
+    font-size: 3vw; /* 글자 크기 증가 */
 }
 
 .day-shift:hover, .night-shift:hover {
@@ -161,28 +179,31 @@ h1 {
 
 .night-shift {
     background-color: #6f42c1;
-    margin-top: 2px;
+    margin-top: 0.5vh; /* 간격 증가 */
 }
 
 .team-buttons-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.8rem;
-    margin-top: 1rem;
+    gap: 2vw; /* 간격 조정 */
+    margin-top: 2vh; /* 세로 여백 증가 */
     flex-wrap: wrap;
+    padding-bottom: 1vh; /* 아래쪽 패딩 추가 */
 }
 
 .team-buttons {
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 1.5vw; /* 간격 조정 */
     flex-wrap: wrap;
+    flex-grow: 1; /* 버튼들이 남은 공간을 차지하도록 */
+    justify-content: space-evenly; /* 버튼들 사이 균등 간격 */
 }
 
 .team-button {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+    padding: 1.2vh 2.5vw; /* 패딩 증가 */
+    font-size: 3.8vw; /* 글자 크기 증가 */
     font-weight: bold;
     border: none;
     color: white;
@@ -190,7 +211,8 @@ h1 {
     border-radius: 4px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
-    min-width: 65px;
+    min-width: 18vw; /* 최소 너비 증가 */
+    flex-basis: auto; /* 유연한 너비 */
 }
 
 .team-button[data-team="1"] { background-color: #4CAF50; }
@@ -215,14 +237,14 @@ h1 {
 
 .team-status {
     color: white;
-    padding: 0.2rem;
+    padding: 0.5vh 0.5vw; /* 패딩 증가 */
     border-radius: 4px;
     text-align: center;
     width: 100%;
     font-weight: bold;
     margin-top: auto;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    font-size: 0.75rem;
+    font-size: 3vw; /* 글자 크기 증가 */
 }
 
 .team-status.주간 { background-color: #FFD700; color: #333; }
@@ -255,7 +277,7 @@ h1 {
 
 .memo-content {
     background-color: white;
-    padding: 1.5rem;
+    padding: 3vh 5vw; /* 패딩 증가 */
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 90%;
@@ -266,18 +288,19 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2vh; /* 세로 여백 증가 */
 }
 
 .memo-header h3 {
     margin: 0;
     color: #333;
+    font-size: 5vw; /* 글자 크기 증가 */
 }
 
 .close-memo {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 8vw; /* 글자 크기 증가 */
     cursor: pointer;
     color: #666;
 }
@@ -288,13 +311,14 @@ h1 {
 
 .memo-textarea {
     width: 100%;
-    min-height: 120px;
-    padding: 0.5rem;
+    min-height: 20vh; /* 높이 증가 */
+    padding: 2vw; /* 패딩 증가 */
     border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
     font-family: inherit;
-    margin-bottom: 1rem;
+    margin-bottom: 2vh; /* 세로 여백 증가 */
+    font-size: 4vw; /* 글자 크기 증가 */
 }
 
 .memo-textarea:focus {
@@ -306,16 +330,17 @@ h1 {
 .memo-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: 2vw; /* 간격 증가 */
 }
 
 .memo-save,
 .memo-cancel {
-    padding: 0.5rem 1rem;
+    padding: 1.5vh 4vw; /* 패딩 증가 */
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 4vw; /* 글자 크기 증가 */
 }
 
 .memo-save {
@@ -338,10 +363,10 @@ h1 {
 
 .memo-indicator {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 8px;
-    height: 8px;
+    top: 0.5vh;
+    right: 0.5vw;
+    width: 2vw;
+    height: 2vw;
     background-color: #ffc107;
     border-radius: 50%;
     display: none;
@@ -369,13 +394,13 @@ h1 {
 .memo-tooltip {
     position: absolute;
     background-color: #fff;
-    padding: 0.5rem;
+    padding: 1vh 2vw; /* 패딩 증가 */
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    max-width: 200px;
+    max-width: 50vw; /* 최대 너비 조정 */
     z-index: 100;
     display: none;
-    font-size: 0.8rem;
+    font-size: 3.5vw; /* 글자 크기 증가 */
     color: #333;
     white-space: pre-wrap;
     word-break: break-word;
@@ -388,8 +413,8 @@ h1 {
 }
 
 .setting-button {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+    padding: 1.2vh 2.5vw; /* 패딩 증가 */
+    font-size: 3.8vw; /* 글자 크기 증가 */
     font-weight: bold;
     border: none;
     color: white;
@@ -399,6 +424,8 @@ h1 {
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
     white-space: nowrap;
+    width: 100%; /* 너비 100%로 설정 */
+    margin-top: 1vh; /* 팀 버튼과 간격 조절 */
 }
 
 .setting-button:hover {
@@ -407,7 +434,6 @@ h1 {
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* 근무 순서 설정 모달 스타일 변경 */
 .setting-modal {
     display: none;
     position: fixed;
@@ -417,8 +443,7 @@ h1 {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
-    /* 모달을 하단에 배치하기 위해 flex-end 사용 */
-    align-items: flex-end; /* 이 부분 변경 */
+    align-items: flex-end;
     justify-content: center;
 }
 
@@ -428,18 +453,18 @@ h1 {
 
 .setting-content {
     background-color: white;
-    padding: 1.5rem;
-    border-radius: 8px 8px 0 0; /* 상단만 둥글게 */
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2); /* 상단 그림자 */
-    width: 100%; /* 너비를 100%로 설정 */
-    max-width: 500px; /* PC에서도 너무 커지지 않도록 최대 너비 설정 */
+    padding: 3vh 5vw; /* 패딩 증가 */
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
     text-align: center;
-    transform: translateY(100%); /* 처음에는 화면 아래로 숨김 */
-    transition: transform 0.3s ease-out; /* 부드럽게 나타나는 효과 */
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
 }
 
 .setting-modal.show .setting-content {
-    transform: translateY(0); /* 모달이 보일 때 위로 올림 */
+    transform: translateY(0);
 }
 
 
@@ -447,18 +472,19 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2vh; /* 세로 여백 증가 */
 }
 
 .setting-header h3 {
     margin: 0;
     color: #333;
+    font-size: 5vw; /* 글자 크기 증가 */
 }
 
 .close-setting {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 8vw; /* 글자 크기 증가 */
     cursor: pointer;
     color: #666;
 }
@@ -468,29 +494,29 @@ h1 {
 }
 
 .setting-body p {
-    margin-bottom: 0.8rem;
-    font-size: 0.9rem;
+    margin-bottom: 1.5vh; /* 세로 여백 증가 */
+    font-size: 4vw; /* 글자 크기 증가 */
 }
 
 #shiftOrderDisplay {
     font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
+    font-size: 4.5vw; /* 글자 크기 증가 */
+    margin-bottom: 2vh; /* 세로 여백 증가 */
+    padding: 1.5vh 2vw; /* 패딩 증가 */
     border: 1px solid #ddd;
     border-radius: 4px;
     background-color: #f8f9fa;
 }
 
 #rotateShiftOrder {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+    padding: 1.5vh 4vw; /* 패딩 증가 */
+    font-size: 4.5vw; /* 글자 크기 증가 */
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin-bottom: 2vh; /* 세로 여백 증가 */
 }
 
 #rotateShiftOrder:hover {
@@ -503,13 +529,14 @@ h1 {
 }
 
 .setting-close {
-    padding: 0.5rem 1rem;
+    padding: 1.5vh 4vw; /* 패딩 증가 */
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     background-color: #6c757d;
     color: white;
+    font-size: 4vw; /* 글자 크기 증가 */
 }
 
 .setting-close:hover {
@@ -517,96 +544,36 @@ h1 {
 }
 
 .description {
-    font-size: 0.75rem;
+    font-size: 3.5vw; /* 글자 크기 증가 */
     color: #666;
-    margin-top: 0.5rem;
+    margin-top: 1vh; /* 세로 여백 증가 */
 }
 
-/* 모바일 전용 미디어 쿼리 조정 */
-@media screen and (max-width: 480px) {
+/* 추가: 데스크톱 등 큰 화면에서는 max-width로 제한하여 보기 좋게 */
+@media screen and (min-width: 600px) {
     .container {
-        padding: 0.2rem;
+        max-width: 800px; /* 넓은 화면에서는 최대 너비 제한 */
+        padding: 20px;
     }
-
-    h1 {
-        font-size: 1.1rem;
-        margin-bottom: 0.6rem;
-    }
-
-    .calendar-controls button {
-        width: 30px;
-        height: 30px;
-        font-size: 0.8rem;
-    }
-
-    #currentMonth {
-        font-size: 0.9rem;
-        min-width: 90px;
-    }
-
-    .calendar-header div {
-        padding: 0.2rem;
-        font-size: 0.75rem;
-    }
-
-    .calendar-day {
-        min-height: 60px;
-        padding: 0.1rem;
-        font-size: 0.75rem;
-    }
-
-    .date-number {
-        font-size: 0.8rem;
-    }
-
-    .holiday-name {
-        font-size: 0.6rem;
-    }
-
-    .shift-info {
-        gap: 0.1rem;
-    }
-
-    .day-shift, .night-shift {
-        padding: 0.1rem;
-        font-size: 0.7rem;
-    }
-
-    .team-buttons-container {
-        gap: 0.5rem;
-        margin-top: 0.8rem;
-        flex-direction: column;
-    }
-
-    .team-buttons {
-        width: 100%;
-        justify-content: center;
-        gap: 0.4rem;
-    }
-
-    .team-button {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-        min-width: 55px;
-    }
-
-    .setting-button {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-        width: 100%;
-    }
-
-    .memo-content {
-        padding: 1rem;
-        width: 95%; /* 모바일에서 메모 모달 너비 약간 넓힘 */
-    }
-
-    .memo-textarea {
-        min-height: 80px;
-    }
-
-    .memo-tooltip {
-        max-width: 120px;
-        font-size: 0.7rem;
-    }
+    h1 { font-size: 30px; }
+    .calendar-controls button { font-size: 18px; width: 40px; height: 40px; }
+    #currentMonth { font-size: 20px; min-width: 150px; }
+    .calendar-header div { font-size: 16px; padding: 10px; }
+    .calendar-day { min-height: 80px; font-size: 14px; padding: 5px; }
+    .date-number { font-size: 18px; margin-bottom: 5px; }
+    .holiday-name { font-size: 13px; margin-bottom: 5px; }
+    .shift-info { font-size: 14px; gap: 3px; }
+    .day-shift, .night-shift { font-size: 13px; padding: 3px; }
+    .team-buttons-container { margin-top: 20px; }
+    .team-buttons { gap: 10px; }
+    .team-button, .setting-button { font-size: 16px; padding: 8px 15px; min-width: 80px; }
+    .memo-content, .setting-content { padding: 30px; max-width: 400px; }
+    .memo-header h3, .setting-header h3 { font-size: 24px; }
+    .close-memo, .close-setting { font-size: 30px; }
+    .memo-textarea { min-height: 120px; font-size: 16px; }
+    .memo-actions button, .setting-actions button, #rotateShiftOrder { font-size: 16px; padding: 10px 20px; }
+    #shiftOrderDisplay { font-size: 18px; padding: 10px; }
+    .description { font-size: 14px; }
+    .memo-tooltip { max-width: 200px; font-size: 14px; padding: 5px; }
+    .memo-indicator { width: 8px; height: 8px; top: 2px; right: 2px;}
 }

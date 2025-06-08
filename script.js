@@ -168,10 +168,7 @@ class WorkSchedule {
             calendarDays.appendChild(dayElement);
         }
         
-        // 마지막 줄 빈칸 제거 로직 수정
-        // 현재까지 렌더링된 셀의 총 개수
         const totalCellsFilled = startingDayOfWeek + daysInMonth;
-        // 총 7의 배수가 되도록 남은 셀을 계산
         const remainingCells = (7 - (totalCellsFilled % 7)) % 7; 
         
         for (let i = 0; i < remainingCells; i++) {
