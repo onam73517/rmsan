@@ -14,42 +14,41 @@ body {
 
 .container {
     margin: 0 auto;
-    padding: 0.5vh 1vw; /* 세로 여백은 vh, 가로 여백은 vw로 조정 */
+    padding: 0.5vh 1vw;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     width: 100%;
-    /* 세로 공간을 꽉 채우기 위한 추가 설정 */
-    min-height: calc(100vh - 1vh); /* body padding 고려 (0.5vh * 2) */
-    justify-content: space-between; /* 요소들 사이에 공간을 균등하게 배분 */
+    min-height: calc(100vh - 1vh);
+    justify-content: space-between;
 }
 
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 1.5vh; /* 세로 여백 증가 */
-    font-size: 5.5vw; /* 글자 크기 증가 */
+    margin-bottom: 1.5vh;
+    font-size: 5.5vw;
 }
 
 .calendar-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2vw; /* 간격 조정 */
-    margin-bottom: 1.5vh; /* 세로 여백 증가 */
+    gap: 2vw;
+    margin-bottom: 1.5vh;
 }
 
 .calendar-controls button {
-    padding: 1.5vh 2vw; /* 패딩 증가 */
-    font-size: 5vw; /* 글자 크기 증가 */
+    padding: 1.5vh 2vw;
+    font-size: 5vw;
     border: none;
     background-color: #007bff;
     color: white;
     cursor: pointer;
     border-radius: 4px;
-    width: 12vw; /* 버튼 크기 증가 */
-    height: 6vh; /* 버튼 높이 증가 */
-    display: flex; /* 버튼 텍스트 중앙 정렬 */
+    width: 12vw;
+    height: 6vh;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -59,9 +58,9 @@ h1 {
 }
 
 #currentMonth {
-    min-width: 30vw; /* 너비 증가 */
+    min-width: 30vw;
     text-align: center;
-    font-size: 6vw; /* 글자 크기 증가 */
+    font-size: 6vw;
     font-weight: bold;
 }
 
@@ -70,7 +69,7 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    flex-grow: 1; /* 달력이 남은 공간을 차지하도록 설정 */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
@@ -86,8 +85,8 @@ h1 {
     text-align: center;
     font-weight: bold;
     color: #495057;
-    padding: 1vh 0.5vw; /* 패딩 증가 */
-    font-size: 3.5vw; /* 글자 크기 증가 */
+    padding: 1vh 0.5vw;
+    font-size: 3.5vw;
 }
 
 .calendar-header .weekend {
@@ -100,21 +99,20 @@ h1 {
     border-left: 2px solid #dee2e6;
     gap: 1px;
     background-color: #dee2e6;
-    flex-grow: 1; /* 날짜 칸들이 남은 세로 공간을 균등하게 차지 */
+    flex-grow: 1;
 }
 
 .calendar-day {
     background-color: white;
-    padding: 0.5vh 0.5vw; /* 패딩 조정 */
-    /* min-height는 없애고, flex-grow로 높이 자동 조절 */
+    padding: 0.5vh 0.5vw;
     display: flex;
     flex-direction: column;
     border-right: 2px solid #dee2e6;
     border-bottom: 2px solid #dee2e6;
-    font-size: 3vw; /* 기본 폰트 크기 증가 */
-    flex-grow: 1; /* 각 날짜 칸이 세로 공간을 균등하게 차지 */
-    justify-content: flex-start; /* 내용을 상단에 배치 */
-    align-items: flex-start; /* 내용을 좌측에 배치 */
+    font-size: 3vw;
+    flex-grow: 1;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .calendar-day.weekend {
@@ -133,39 +131,40 @@ h1 {
 
 .date-number {
     font-weight: bold;
-    margin-bottom: 0.5vh; /* 세로 여백 증가 */
-    font-size: 4vw; /* 글자 크기 증가 */
-    width: 100%; /* 너비 100%로 설정하여 가운데 정렬 용이 */
-    text-align: center; /* 날짜 숫자 가운데 정렬 */
+    margin-bottom: 0.5vh;
+    font-size: 4vw;
+    width: 100%;
+    text-align: center;
 }
 
 .holiday-name {
-    font-size: 3vw; /* 글자 크기 증가 */
+    font-size: 3vw;
     color: #dc3545;
-    margin-bottom: 0.5vh; /* 세로 여백 증가 */
-    width: 100%; /* 너비 100%로 설정하여 가운데 정렬 용이 */
-    text-align: center; /* 공휴일 이름 가운데 정렬 */
+    margin-bottom: 0.5vh;
+    width: 100%;
+    text-align: center;
 }
 
 .shift-info {
-    font-size: 3.5vw; /* 글자 크기 증가 */
     display: flex;
     flex-direction: column;
-    gap: 0.5vh; /* 간격 증가 */
-    margin-top: auto; /* 하단에 배치 */
-    width: 100%; /* 너비 100%로 설정 */
+    gap: 0.5vh;
+    margin-top: auto;
+    width: 100%;
+    /* shift-info 자체의 글자 크기는 없애고, 내부 요소에서 설정 */
 }
 
 .day-shift, .night-shift {
     color: white;
-    padding: 0.5vh 0.5vw; /* 패딩 증가 */
+    padding: 1vh 0.5vw; /* 패딩 크게 */
     border-radius: 4px;
     text-align: center;
     width: 100%;
     position: relative;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
     transition: transform 0.1s ease, box-shadow 0.1s ease;
-    font-size: 3vw; /* 글자 크기 증가 */
+    font-size: 4vw; /* 글자 크기 더 크게 */
+    line-height: 1.2; /* 줄 간격 조절 */
 }
 
 .day-shift:hover, .night-shift:hover {
@@ -179,31 +178,31 @@ h1 {
 
 .night-shift {
     background-color: #6f42c1;
-    margin-top: 0.5vh; /* 간격 증가 */
+    margin-top: 0.8vh; /* 간격 증가 */
 }
 
 .team-buttons-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2vw; /* 간격 조정 */
-    margin-top: 2vh; /* 세로 여백 증가 */
+    gap: 2vw;
+    margin-top: 2vh;
     flex-wrap: wrap;
-    padding-bottom: 1vh; /* 아래쪽 패딩 추가 */
+    padding-bottom: 1vh;
 }
 
 .team-buttons {
     display: flex;
     justify-content: center;
-    gap: 1.5vw; /* 간격 조정 */
+    gap: 1.5vw;
     flex-wrap: wrap;
-    flex-grow: 1; /* 버튼들이 남은 공간을 차지하도록 */
-    justify-content: space-evenly; /* 버튼들 사이 균등 간격 */
+    flex-grow: 1;
+    justify-content: space-evenly;
 }
 
 .team-button {
-    padding: 1.2vh 2.5vw; /* 패딩 증가 */
-    font-size: 3.8vw; /* 글자 크기 증가 */
+    padding: 1.2vh 2.5vw;
+    font-size: 3.8vw;
     font-weight: bold;
     border: none;
     color: white;
@@ -211,8 +210,8 @@ h1 {
     border-radius: 4px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
-    min-width: 18vw; /* 최소 너비 증가 */
-    flex-basis: auto; /* 유연한 너비 */
+    min-width: 18vw;
+    flex-basis: auto;
 }
 
 .team-button[data-team="1"] { background-color: #4CAF50; }
@@ -237,14 +236,15 @@ h1 {
 
 .team-status {
     color: white;
-    padding: 0.5vh 0.5vw; /* 패딩 증가 */
+    padding: 1vh 0.5vw; /* 패딩 크게 */
     border-radius: 4px;
     text-align: center;
     width: 100%;
     font-weight: bold;
     margin-top: auto;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    font-size: 3vw; /* 글자 크기 증가 */
+    font-size: 4vw; /* 글자 크기 더 크게 */
+    line-height: 1.2; /* 줄 간격 조절 */
 }
 
 .team-status.주간 { background-color: #FFD700; color: #333; }
@@ -277,7 +277,7 @@ h1 {
 
 .memo-content {
     background-color: white;
-    padding: 3vh 5vw; /* 패딩 증가 */
+    padding: 3vh 5vw;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     width: 90%;
@@ -288,19 +288,19 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2vh; /* 세로 여백 증가 */
+    margin-bottom: 2vh;
 }
 
 .memo-header h3 {
     margin: 0;
     color: #333;
-    font-size: 5vw; /* 글자 크기 증가 */
+    font-size: 5vw;
 }
 
 .close-memo {
     background: none;
     border: none;
-    font-size: 8vw; /* 글자 크기 증가 */
+    font-size: 8vw;
     cursor: pointer;
     color: #666;
 }
@@ -311,14 +311,14 @@ h1 {
 
 .memo-textarea {
     width: 100%;
-    min-height: 20vh; /* 높이 증가 */
-    padding: 2vw; /* 패딩 증가 */
+    min-height: 20vh;
+    padding: 2vw;
     border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
     font-family: inherit;
-    margin-bottom: 2vh; /* 세로 여백 증가 */
-    font-size: 4vw; /* 글자 크기 증가 */
+    margin-bottom: 2vh;
+    font-size: 4vw;
 }
 
 .memo-textarea:focus {
@@ -330,17 +330,17 @@ h1 {
 .memo-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 2vw; /* 간격 증가 */
+    gap: 2vw;
 }
 
 .memo-save,
 .memo-cancel {
-    padding: 1.5vh 4vw; /* 패딩 증가 */
+    padding: 1.5vh 4vw;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 4vw; /* 글자 크기 증가 */
+    font-size: 4vw;
 }
 
 .memo-save {
@@ -394,13 +394,13 @@ h1 {
 .memo-tooltip {
     position: absolute;
     background-color: #fff;
-    padding: 1vh 2vw; /* 패딩 증가 */
+    padding: 1vh 2vw;
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    max-width: 50vw; /* 최대 너비 조정 */
+    max-width: 50vw;
     z-index: 100;
     display: none;
-    font-size: 3.5vw; /* 글자 크기 증가 */
+    font-size: 3.5vw;
     color: #333;
     white-space: pre-wrap;
     word-break: break-word;
@@ -412,20 +412,24 @@ h1 {
     display: block;
 }
 
+/* 설정 버튼 스타일을 team-button과 동일하게 변경 */
 .setting-button {
-    padding: 1.2vh 2.5vw; /* 패딩 증가 */
-    font-size: 3.8vw; /* 글자 크기 증가 */
+    /* team-button의 스타일과 일치시키기 위해 그대로 복사 */
+    padding: 1.2vh 2.5vw;
+    font-size: 3.8vw;
     font-weight: bold;
     border: none;
     color: white;
-    background-color: #6c757d;
+    background-color: #6c757d; /* 기본 색상 유지 */
     cursor: pointer;
     border-radius: 4px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
+    min-width: 18vw; /* team-button과 동일한 최소 너비 */
+    flex-basis: auto;
     white-space: nowrap;
-    width: 100%; /* 너비 100%로 설정 */
-    margin-top: 1vh; /* 팀 버튼과 간격 조절 */
+    /* team-buttons 내에 함께 배치되도록 margin-top 제거 */
+    margin-top: 0; /* 이전에 있던 margin-top 제거 */
 }
 
 .setting-button:hover {
@@ -453,7 +457,7 @@ h1 {
 
 .setting-content {
     background-color: white;
-    padding: 3vh 5vw; /* 패딩 증가 */
+    padding: 3vh 5vw;
     border-radius: 8px 8px 0 0;
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
     width: 100%;
@@ -472,19 +476,19 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2vh; /* 세로 여백 증가 */
+    margin-bottom: 2vh;
 }
 
 .setting-header h3 {
     margin: 0;
     color: #333;
-    font-size: 5vw; /* 글자 크기 증가 */
+    font-size: 5vw;
 }
 
 .close-setting {
     background: none;
     border: none;
-    font-size: 8vw; /* 글자 크기 증가 */
+    font-size: 8vw;
     cursor: pointer;
     color: #666;
 }
@@ -494,29 +498,29 @@ h1 {
 }
 
 .setting-body p {
-    margin-bottom: 1.5vh; /* 세로 여백 증가 */
-    font-size: 4vw; /* 글자 크기 증가 */
+    margin-bottom: 1.5vh;
+    font-size: 4vw;
 }
 
 #shiftOrderDisplay {
     font-weight: bold;
-    font-size: 4.5vw; /* 글자 크기 증가 */
-    margin-bottom: 2vh; /* 세로 여백 증가 */
-    padding: 1.5vh 2vw; /* 패딩 증가 */
+    font-size: 4.5vw;
+    margin-bottom: 2vh;
+    padding: 1.5vh 2vw;
     border: 1px solid #ddd;
     border-radius: 4px;
     background-color: #f8f9fa;
 }
 
 #rotateShiftOrder {
-    padding: 1.5vh 4vw; /* 패딩 증가 */
-    font-size: 4.5vw; /* 글자 크기 증가 */
+    padding: 1.5vh 4vw;
+    font-size: 4.5vw;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-bottom: 2vh; /* 세로 여백 증가 */
+    margin-bottom: 2vh;
 }
 
 #rotateShiftOrder:hover {
@@ -529,14 +533,14 @@ h1 {
 }
 
 .setting-close {
-    padding: 1.5vh 4vw; /* 패딩 증가 */
+    padding: 1.5vh 4vw;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
     background-color: #6c757d;
     color: white;
-    font-size: 4vw; /* 글자 크기 증가 */
+    font-size: 4vw;
 }
 
 .setting-close:hover {
@@ -544,15 +548,15 @@ h1 {
 }
 
 .description {
-    font-size: 3.5vw; /* 글자 크기 증가 */
+    font-size: 3.5vw;
     color: #666;
-    margin-top: 1vh; /* 세로 여백 증가 */
+    margin-top: 1vh;
 }
 
-/* 추가: 데스크톱 등 큰 화면에서는 max-width로 제한하여 보기 좋게 */
+/* PC/넓은 화면 대응 (이전과 동일하게 유지) */
 @media screen and (min-width: 600px) {
     .container {
-        max-width: 800px; /* 넓은 화면에서는 최대 너비 제한 */
+        max-width: 800px;
         padding: 20px;
     }
     h1 { font-size: 30px; }
@@ -563,7 +567,7 @@ h1 {
     .date-number { font-size: 18px; margin-bottom: 5px; }
     .holiday-name { font-size: 13px; margin-bottom: 5px; }
     .shift-info { font-size: 14px; gap: 3px; }
-    .day-shift, .night-shift { font-size: 13px; padding: 3px; }
+    .day-shift, .night-shift { font-size: 16px; padding: 5px 8px; /* PC에서도 크기 조금 더 키움 */ }
     .team-buttons-container { margin-top: 20px; }
     .team-buttons { gap: 10px; }
     .team-button, .setting-button { font-size: 16px; padding: 8px 15px; min-width: 80px; }
