@@ -2,6 +2,8 @@ class WorkSchedule {
     constructor() {
         this.currentDate = new Date();
         this.teams = ['1팀', '2팀', '3팀', '4팀'];
+        // 기본 근무 순서 (2024년 1월 1일 기준: 1팀 주간, 2팀 야간)
+        this.baseShiftOrder = [0, 1, 2, 3]; // 0:주간, 1:야간, 2:휴무, 3:비번
         this.selectedTeam = null;
         this.holidays = {
             '1-1': '신정',
@@ -15,6 +17,7 @@ class WorkSchedule {
         };
         this.memoData = {};
         this.loadMemoFromLocalStorage();
+        this.loadShiftOrderFromLocalStorage(); // 근무 순서 로드
         this.initializeCalendar();
         this.setupEventListeners();
     }
@@ -22,6 +25,7 @@ class WorkSchedule {
     initializeCalendar() {
         this.updateMonthDisplay();
         this.renderCalendar();
+        this.updateShiftOrderDisplay(); // 설정 모달에 현재 근무 순서 표시
     }
 
     setupEventListeners() {
@@ -65,6 +69,24 @@ class WorkSchedule {
         });
 
         window.addEventListener('beforeunload', () => this.saveMemoToLocalStorage());
+
+        // 근무 순서 설정 모달 관련 이벤트 리스너
+        const settingModal = document.getElementById('settingModal');
+        const settingButton = document.getElementById('shiftOrderSettingBtn');
+        const closeSettingBtn = document.querySelector('.close-setting');
+        const settingCloseBtn = document.querySelector('.setting-close');
+        const rotateShiftOrderBtn = document.getElementById('rotateShiftOrder');
+
+        settingButton.addEventListener('click', () => this.openSettingModal());
+        closeSettingBtn.addEventListener('click', () => this.closeSettingModal());
+        settingCloseBtn.addEventListener('click', () => this.closeSettingModal());
+        rotateShiftOrderBtn.addEventListener('click', () => this.rotateShiftOrder());
+
+        settingModal.addEventListener('click', (e) => {
+            if (e.target === settingModal) {
+                this.closeSettingModal();
+            }
+        });
     }
 
     toggleTeamHighlight(teamNumber) {
@@ -88,18 +110,18 @@ class WorkSchedule {
             `${this.currentDate.getFullYear()}년 ${monthNames[this.currentDate.getMonth()]}`;
     }
 
+    // 근무 순서 계산 로직 수정
     getTeamSchedule(date) {
-        const baseDate = new Date(2024, 0, 1);
+        const baseDate = new Date(2024, 0, 1); // 기준일: 2024년 1월 1일 (월요일)
         const diffDays = Math.floor((date - baseDate) / (1000 * 60 * 60 * 24));
-        const cycleDay = ((diffDays % 4) + 4) % 4;
+        const cycleDay = ((diffDays % 4) + 4) % 4; // 0, 1, 2, 3
 
-        const teamPositions = [0, 1, 2, 3];
-        
-        const dayTeamIndex = teamPositions.findIndex(pos => 
-            ((pos + cycleDay) % 4) === 0
+        // 현재 baseShiftOrder 배열을 기반으로 주간/야간 팀 찾기
+        const dayTeamIndex = this.baseShiftOrder.findIndex(pos => 
+            ((pos + cycleDay) % 4) === 0 // 0:주간
         );
-        const nightTeamIndex = teamPositions.findIndex(pos => 
-            ((pos + cycleDay) % 4) === 1
+        const nightTeamIndex = this.baseShiftOrder.findIndex(pos => 
+            ((pos + cycleDay) % 4) === 1 // 1:야간
         );
 
         return {
@@ -108,12 +130,13 @@ class WorkSchedule {
         };
     }
 
+    // 팀 상태 계산 로직 수정
     getTeamStatus(date, teamNumber) {
         const baseDate = new Date(2024, 0, 1);
         const diffDays = Math.floor((date - baseDate) / (1000 * 60 * 60 * 24));
         const cycleDay = ((diffDays % 4) + 4) % 4;
         
-        const teamStartPosition = teamNumber - 1;
+        const teamStartPosition = this.baseShiftOrder.indexOf(parseInt(teamNumber) - 1); // 현재 팀의 근무 순서상 위치
         const currentPosition = (teamStartPosition + cycleDay) % 4;
 
         switch (currentPosition) {
@@ -128,19 +151,19 @@ class WorkSchedule {
         const year = this.currentDate.getFullYear();
         const month = this.currentDate.getMonth();
         
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
         
-        const startingDayIndex = firstDay.getDay(); // 현재 월의 1일이 시작하는 요일 (0:일, 6:토)
-        const daysInMonth = lastDay.getDate(); // 현재 월의 총 일수
+        const startingDayOfWeek = firstDayOfMonth.getDay(); // 현재 월의 1일이 시작하는 요일 (0:일, 6:토)
+        const daysInMonth = lastDayOfMonth.getDate(); // 현재 월의 총 일수
         
         const calendarDays = document.getElementById('calendarDays');
         calendarDays.innerHTML = '';
         
-        // 지난 달의 날짜를 숨기기 위해 빈 셀 추가 (이번 달 1일이 시작하는 요일까지)
-        for (let i = 0; i < startingDayIndex; i++) {
+        // 이전 달의 날짜 대신 빈 셀 추가 (해당 월 1일이 시작하는 요일까지)
+        for (let i = 0; i < startingDayOfWeek; i++) {
             const emptyDayElement = document.createElement('div');
-            emptyDayElement.className = 'calendar-day other-month empty-day'; // 'empty-day' 클래스 추가
+            emptyDayElement.className = 'calendar-day empty-slot'; // 빈칸을 위한 클래스 추가
             calendarDays.appendChild(emptyDayElement);
         }
         
@@ -148,34 +171,29 @@ class WorkSchedule {
         for (let day = 1; day <= daysInMonth; day++) {
             const dayElement = this.createDayElement(
                 day,
-                new Date(year, month, day),
-                false // 현재 달 날짜
+                new Date(year, month, day)
             );
             calendarDays.appendChild(dayElement);
         }
         
-        // 다음 달의 날짜를 숨기기 위해 빈 셀 추가 (총 42개 셀을 채우기 위함)
-        const totalDaysRendered = startingDayIndex + daysInMonth;
+        // 다음 달의 날짜 대신 빈 셀 추가 (총 42개 셀을 채우기 위함)
+        const totalDaysRendered = startingDayOfWeek + daysInMonth;
         const remainingCells = 42 - totalDaysRendered; // 6주 * 7일 = 42
         
         for (let i = 0; i < remainingCells; i++) {
             const emptyDayElement = document.createElement('div');
-            emptyDayElement.className = 'calendar-day other-month empty-day'; // 'empty-day' 클래스 추가
+            emptyDayElement.className = 'calendar-day empty-slot'; // 빈칸을 위한 클래스 추가
             calendarDays.appendChild(emptyDayElement);
         }
     }
 
-    createDayElement(dayNumber, date, isOtherMonth) {
+    createDayElement(dayNumber, date) {
         const dayElement = document.createElement('div');
         dayElement.className = 'calendar-day';
         
-        const dayOfWeek = date.getDay();
+        const dayOfWeek = date.getDay(); // 0:일, 6:토
         if (dayOfWeek === 0 || dayOfWeek === 6 || this.isHoliday(date)) {
             dayElement.classList.add('weekend');
-        }
-        
-        if (isOtherMonth) {
-            dayElement.classList.add('other-month');
         }
         
         const today = new Date();
@@ -199,21 +217,22 @@ class WorkSchedule {
         shiftInfo.className = 'shift-info';
 
         if (this.selectedTeam) {
+            // 특정 팀 선택 시
             const status = this.getTeamStatus(date, this.selectedTeam);
             const statusDiv = this.createTeamStatus(date, this.selectedTeam, status);
             shiftInfo.appendChild(statusDiv);
         } else {
+            // 모든 팀 일정 표시 (주간/야간 팀 번호만)
             const schedule = this.getTeamSchedule(date);
-            
-            // 주간 근무 표시
-            const dayShift = document.createElement('div');
-            dayShift.className = 'day-shift';
-            dayShift.textContent = `주간 ${schedule.day}`;
-            
-            // 주간 근무 메모 기능 추가
-            const dayTeamNumber = parseInt(schedule.day.charAt(0));
             const dateStr = date.toISOString().split('T')[0];
-            const dayMemoKey = `${dateStr}-${dayTeamNumber}-주간`;
+
+            // 주간 근무 팀 번호
+            const dayShiftTeamNum = parseInt(schedule.day.charAt(0));
+            const dayShift = document.createElement('div');
+            dayShift.className = `day-shift team-${dayShiftTeamNum}`; // 팀 번호에 따라 색상 클래스 추가
+            dayShift.textContent = `${dayShiftTeamNum}팀`; // 주간 텍스트 제거
+            
+            const dayMemoKey = `${dateStr}-${dayShiftTeamNum}-주간`;
             if (this.memoData[dayMemoKey]) {
                 dayShift.classList.add('has-memo');
                 const dayIndicator = document.createElement('span');
@@ -226,17 +245,16 @@ class WorkSchedule {
                 dayShift.appendChild(dayTooltip);
             }
             dayShift.addEventListener('click', () => {
-                this.openMemoModal(dateStr, dayTeamNumber, '주간');
+                this.openMemoModal(dateStr, dayShiftTeamNum, '주간');
             });
             
-            // 야간 근무 표시
+            // 야간 근무 팀 번호
+            const nightShiftTeamNum = parseInt(schedule.night.charAt(0));
             const nightShift = document.createElement('div');
-            nightShift.className = 'night-shift';
-            nightShift.textContent = `야간 ${schedule.night}`;
+            nightShift.className = `night-shift team-${nightShiftTeamNum}`; // 팀 번호에 따라 색상 클래스 추가
+            nightShift.textContent = `${nightShiftTeamNum}팀`; // 야간 텍스트 제거
             
-            // 야간 근무 메모 기능 추가
-            const nightTeamNumber = parseInt(schedule.night.charAt(0));
-            const nightMemoKey = `${dateStr}-${nightTeamNumber}-야간`;
+            const nightMemoKey = `${dateStr}-${nightShiftTeamNum}-야간`;
             if (this.memoData[nightMemoKey]) {
                 nightShift.classList.add('has-memo');
                 const nightIndicator = document.createElement('span');
@@ -249,7 +267,7 @@ class WorkSchedule {
                 nightShift.appendChild(nightTooltip);
             }
             nightShift.addEventListener('click', () => {
-                this.openMemoModal(dateStr, nightTeamNumber, '야간');
+                this.openMemoModal(dateStr, nightShiftTeamNum, '야간');
             });
             
             shiftInfo.appendChild(dayShift);
@@ -266,8 +284,9 @@ class WorkSchedule {
         const hasMemo = this.memoData[memoKey];
         
         const statusDiv = document.createElement('div');
+        // 'team-status' 클래스는 그대로 유지하되, '주간', '야간', '휴무', '비번' 클래스를 함께 사용
         statusDiv.className = `team-status ${shift}${hasMemo ? ' has-memo' : ''}`;
-        statusDiv.textContent = shift;
+        statusDiv.textContent = shift; // "주간", "야간", "휴무", "비번" 텍스트는 그대로 유지
         
         const indicator = document.createElement('span');
         indicator.className = 'memo-indicator';
@@ -336,6 +355,42 @@ class WorkSchedule {
         const savedMemos = localStorage.getItem('calendarMemos');
         if (savedMemos) {
             this.memoData = JSON.parse(savedMemos);
+        }
+    }
+
+    // 근무 순서 설정 관련 메서드
+    openSettingModal() {
+        document.getElementById('settingModal').classList.add('show');
+        this.updateShiftOrderDisplay();
+    }
+
+    closeSettingModal() {
+        document.getElementById('settingModal').classList.remove('show');
+    }
+
+    rotateShiftOrder() {
+        // baseShiftOrder 배열을 한 칸씩 뒤로 미룸 (순환)
+        const lastElement = this.baseShiftOrder.pop();
+        this.baseShiftOrder.unshift(lastElement);
+        this.saveShiftOrderToLocalStorage();
+        this.updateShiftOrderDisplay();
+        this.renderCalendar(); // 달력 재렌더링
+    }
+
+    updateShiftOrderDisplay() {
+        const shiftOrderDisplay = document.getElementById('shiftOrderDisplay');
+        const currentOrderTeams = this.baseShiftOrder.map(index => `${index + 1}팀`);
+        shiftOrderDisplay.textContent = `주간 ${currentOrderTeams[0]} / 야간 ${currentOrderTeams[1]} / 휴무 ${currentOrderTeams[2]} / 비번 ${currentOrderTeams[3]}`;
+    }
+
+    saveShiftOrderToLocalStorage() {
+        localStorage.setItem('baseShiftOrder', JSON.stringify(this.baseShiftOrder));
+    }
+
+    loadShiftOrderFromLocalStorage() {
+        const savedOrder = localStorage.getItem('baseShiftOrder');
+        if (savedOrder) {
+            this.baseShiftOrder = JSON.parse(savedOrder);
         }
     }
 }

@@ -7,7 +7,6 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
-    /* 모바일에서 한 화면에 나오도록 추가 */
     min-height: 100vh; /* 뷰포트 높이의 100%를 최소 높이로 설정 */
     display: flex;
     flex-direction: column;
@@ -25,14 +24,8 @@ body {
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 1rem; /* 여백 줄임 */
-    font-size: 1.5rem;
-}
-
-.top-controls {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem; /* 여백 줄임 */
+    font-size: 1.4rem; /* 폰트 크기 약간 줄임 */
 }
 
 .calendar-controls {
@@ -40,44 +33,75 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem; /* 여백 줄임 */
 }
 
 .calendar-controls button {
-    padding: 0.5rem;
-    font-size: 1rem;
+    padding: 0.4rem; /* 패딩 줄임 */
+    font-size: 0.9rem; /* 폰트 크기 줄임 */
     border: none;
     background-color: #007bff;
     color: white;
     cursor: pointer;
     border-radius: 4px;
-    width: 40px;
-    height: 40px;
+    width: 35px; /* 버튼 크기 줄임 */
+    height: 35px; /* 버튼 크기 줄임 */
 }
 
 .calendar-controls button:hover {
     background-color: #0056b3;
 }
 
+#currentMonth {
+    min-width: 110px; /* 너비 줄임 */
+    text-align: center;
+    font-size: 1rem; /* 폰트 크기 줄임 */
+}
+
+/* 새로운 범례 스타일 */
 .legend {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    gap: 0.8rem; /* 범례 항목 간 간격 */
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    flex-wrap: wrap; /* 모바일에서 줄바꿈 */
 }
 
 .legend-item {
     display: flex;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    background-color: white;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.6rem;
     border-radius: 4px;
+    background-color: #f8f9fa;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+.legend-item::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 3px;
+}
+
+.legend-item.day-shift::before {
+    background-color: #28a745; /* 주간 근무 색상 */
+}
+
+.legend-item.night-shift::before {
+    background-color: #6f42c1; /* 야간 근무 색상 */
+}
+
 
 .calendar {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* 달력 내용이 삐져나가지 않도록 */
+    overflow: hidden;
 }
 
 .calendar-header {
@@ -91,8 +115,8 @@ h1 {
     text-align: center;
     font-weight: bold;
     color: #495057;
-    padding: 0.5rem;
-    font-size: 0.9rem;
+    padding: 0.4rem; /* 패딩 줄임 */
+    font-size: 0.85rem; /* 폰트 크기 줄임 */
 }
 
 .calendar-header .weekend {
@@ -109,12 +133,13 @@ h1 {
 
 .calendar-day {
     background-color: white;
-    padding: 0.3rem;
-    min-height: 80px;
+    padding: 0.2rem; /* 패딩 줄임 */
+    min-height: 70px; /* 최소 높이 줄임 */
     display: flex;
     flex-direction: column;
     border-right: 2px solid #dee2e6;
     border-bottom: 2px solid #dee2e6;
+    font-size: 0.8rem; /* 기본 폰트 크기 줄임 */
 }
 
 .calendar-day.weekend {
@@ -125,52 +150,49 @@ h1 {
     background-color: #e8f4ff;
 }
 
-/* 이전/다음 달 날짜 숨기기 */
-.calendar-day.other-month {
-    display: none; /* 이전 달/다음 달 날짜를 완전히 숨김 */
-}
-
-/* JavaScript에서 빈 셀을 위해 추가한 클래스 */
-.calendar-day.empty-day {
-    background-color: #f8f9fa; /* 빈 셀의 배경색을 달력 배경과 유사하게 */
-    /* 필요에 따라 border-right, border-bottom을 제거할 수도 있음 */
+/* 이전/다음 달 날짜 대신 빈칸으로 처리 */
+.calendar-day.empty-slot {
+    background-color: #f8f9fa; /* 빈칸의 배경색 */
+    color: transparent; /* 텍스트 숨김 (날짜 등) */
+    pointer-events: none; /* 클릭 이벤트 비활성화 */
 }
 
 
 .date-number {
     font-weight: bold;
-    margin-bottom: 0.3rem;
-    font-size: 0.9rem;
+    margin-bottom: 0.1rem; /* 여백 줄임 */
+    font-size: 0.85rem; /* 폰트 크기 줄임 */
 }
 
 .holiday-name {
-    font-size: 0.7rem;
+    font-size: 0.65rem; /* 폰트 크기 줄임 */
     color: #dc3545;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.1rem; /* 여백 줄임 */
 }
 
 .shift-info {
-    font-size: 0.85rem;
+    font-size: 0.8rem; /* 폰트 크기 줄임 */
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-    margin-top: auto; /* 날짜 아래로 밀착 */
+    gap: 0.2rem; /* 간격 줄임 */
+    margin-top: auto;
 }
 
 .day-shift, .night-shift {
     color: white;
-    padding: 0.3rem;
+    padding: 0.2rem; /* 패딩 줄임 */
     border-radius: 4px;
     text-align: center;
     width: 100%;
     position: relative;
-    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4); /* 그림자 줄임 */
     transition: transform 0.1s ease, box-shadow 0.1s ease;
+    font-size: 0.75rem; /* 폰트 크기 줄임 */
 }
 
 .day-shift:hover, .night-shift:hover {
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6);
+    transform: translateY(-1px); /* 호버 효과 줄임 */
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5); /* 그림자 줄임 */
 }
 
 .day-shift {
@@ -179,250 +201,87 @@ h1 {
 
 .night-shift {
     background-color: #6f42c1;
-    margin-top: 3px;
+    margin-top: 2px; /* 간격 줄임 */
 }
 
-#currentMonth {
-    min-width: 120px;
-    text-align: center;
-    font-size: 1.1rem;
+/* 팀 버튼 컨테이너 */
+.team-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem; /* 팀 버튼과 설정 버튼 사이 간격 */
+    margin-top: 1rem;
+    flex-wrap: wrap; /* 모바일에서 줄바꿈 */
 }
 
 .team-buttons {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 1rem;
     flex-wrap: wrap;
 }
 
 .team-button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    padding: 0.4rem 0.8rem; /* 패딩 줄임 */
+    font-size: 0.9rem; /* 폰트 크기 줄임 */
     font-weight: bold;
     border: none;
     color: white;
     cursor: pointer;
     border-radius: 4px;
-    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* 그림자 줄임 */
     transition: all 0.2s ease;
-    min-width: 70px;
+    min-width: 65px; /* 너비 줄임 */
 }
 
-.team-button[data-team="1"] {
-    background-color: #4CAF50;
-}
-
-.team-button[data-team="1"]:hover {
-    background-color: #3d8b40;
-}
-
-.team-button[data-team="2"] {
-    background-color: #2196F3;
-}
-
-.team-button[data-team="2"]:hover {
-    background-color: #1976D2;
-}
-
-.team-button[data-team="3"] {
-    background-color: #9C27B0;
-}
-
-.team-button[data-team="3"]:hover {
-    background-color: #7B1FA2;
-}
-
-.team-button[data-team="4"] {
-    background-color: #FF9800;
-}
-
-.team-button[data-team="4"]:hover {
-    background-color: #F57C00;
-}
+.team-button[data-team="1"] { background-color: #4CAF50; }
+.team-button[data-team="1"]:hover { background-color: #3d8b40; }
+.team-button[data-team="2"] { background-color: #2196F3; }
+.team-button[data-team="2"]:hover { background-color: #1976D2; }
+.team-button[data-team="3"] { background-color: #9C27B0; }
+.team-button[data-team="3"]:hover { background-color: #7B1FA2; }
+.team-button[data-team="4"] { background-color: #FF9800; }
+.team-button[data-team="4"]:hover { background-color: #F57C00; }
 
 .team-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 }
 
-.team-button.active[data-team="1"] {
-    background-color: #2E7D32;
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
-}
+.team-button.active[data-team="1"] { background-color: #2E7D32; box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5); }
+.team-button.active[data-team="2"] { background-color: #1565C0; box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5); }
+.team-button.active[data-team="3"] { background-color: #6A1B9A; box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5); }
+.team-button.active[data-team="4"] { background-color: #EF6C00; box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5); }
 
-.team-button.active[data-team="2"] {
-    background-color: #1565C0;
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
-}
-
-.team-button.active[data-team="3"] {
-    background-color: #6A1B9A;
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
-}
-
-.team-button.active[data-team="4"] {
-    background-color: #EF6C00;
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
-}
-
-.day-shift.highlight, .night-shift.highlight {
-    transform: scale(1.05);
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
-}
-
-/* 팀별 하이라이트 색상 */
-.day-shift.highlight[data-team="1"], .night-shift.highlight[data-team="1"] {
-    background-color: #2E7D32;
-}
-
-.day-shift.highlight[data-team="2"], .night-shift.highlight[data-team="2"] {
-    background-color: #1565C0;
-}
-
-.day-shift.highlight[data-team="3"], .night-shift.highlight[data-team="3"] {
-    background-color: #6A1B9A;
-}
-
-.day-shift.highlight[data-team="4"], .night-shift.highlight[data-team="4"] {
-    background-color: #EF6C00;
-}
 
 .team-status {
     color: white;
-    padding: 0.3rem;
+    padding: 0.2rem; /* 패딩 줄임 */
     border-radius: 4px;
     text-align: center;
     width: 100%;
     font-weight: bold;
     margin-top: auto;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    font-size: 0.8rem;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* 그림자 줄임 */
+    font-size: 0.75rem; /* 폰트 크기 줄임 */
 }
 
 /* 주간 근무 스타일 */
-.team-status.주간 {
-    background-color: #FFD700;  /* 개나리색 */
-    color: #333;
-}
-
+.team-status.주간 { background-color: #FFD700; color: #333; }
 /* 야간 근무 스타일 */
-.team-status.야간 {
-    background-color: #6c757d;  /* 회색 */
-}
-
+.team-status.야간 { background-color: #6c757d; }
 /* 휴무 스타일 */
-.team-status.휴무 {
-    background-color: #dc3545;  /* 빨간색 */
-}
-
+.team-status.휴무 { background-color: #dc3545; }
 /* 비번 스타일 */
-.team-status.비번 {
-    background-color: #0d6efd;  /* 파란색 */
-}
+.team-status.비번 { background-color: #0d6efd; }
 
-/* 호버 효과 */
 .team-status:hover {
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
 }
 
-.shift-info {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-}
-
-/* 미디어 쿼리 추가 */
-@media screen and (max-width: 480px) {
-    .container {
-        padding: 0.3rem;
-        margin: 0.5rem auto;
-    }
-
-    h1 {
-        font-size: 1.2rem;
-        margin-bottom: 1rem;
-    }
-
-    .calendar-header div {
-        padding: 0.3rem;
-        font-size: 0.8rem;
-    }
-
-    .calendar-day {
-        min-height: 70px;
-        padding: 0.2rem;
-    }
-
-    .date-number {
-        font-size: 0.8rem;
-        margin-bottom: 0.2rem;
-    }
-
-    .team-status {
-        padding: 0.2rem;
-        font-size: 0.75rem;
-    }
-
-    .team-button {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-        min-width: 60px;
-        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
-    }
-
-    #currentMonth {
-        font-size: 1rem;
-        min-width: 100px;
-    }
-
-    .team-button:hover,
-    .team-button.active[data-team="1"],
-    .team-button.active[data-team="2"],
-    .team-button.active[data-team="3"],
-    .team-button.active[data-team="4"] {
-        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
-    }
-}
-
-/* 더 작은 화면을 위한 추가 미디어 쿼리 */
-@media screen and (max-width: 360px) {
-    .calendar-day {
-        min-height: 60px;
-    }
-
-    .team-status {
-        font-size: 0.7rem;
-    }
-
-    .holiday-name {
-        font-size: 0.6rem;
-    }
-
-    .team-buttons {
-        gap: 0.3rem;
-    }
-
-    .team-button {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
-        min-width: 55px;
-        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
-    }
-
-    .team-button:hover,
-    .team-button.active[data-team="1"],
-    .team-button.active[data-team="2"],
-    .team-button.active[data-team="3"],
-    .team-button.active[data-team="4"] {
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
-    }
-}
-
-/* 메모 모달 스타일 */
+/* 메모 모달 스타일은 기존 유지 (필요 시 미디어 쿼리 추가) */
 .memo-modal {
     display: none;
     position: fixed;
@@ -539,6 +398,18 @@ h1 {
     display: block;
 }
 
+/* 팀별 색상 (주간/야간) */
+.day-shift.team-1 { background-color: #4CAF50; }
+.day-shift.team-2 { background-color: #2196F3; }
+.day-shift.team-3 { background-color: #9C27B0; }
+.day-shift.team-4 { background-color: #FF9800; }
+
+.night-shift.team-1 { background-color: #3d8b40; }
+.night-shift.team-2 { background-color: #1976D2; }
+.night-shift.team-3 { background-color: #7B1FA2; }
+.night-shift.team-4 { background-color: #F57C00; }
+
+
 .team-status {
     position: relative;
     cursor: pointer;
@@ -560,22 +431,240 @@ h1 {
     word-break: break-word;
 }
 
-.team-status:hover .memo-tooltip {
+.team-status:hover .memo-tooltip,
+.day-shift.has-memo:hover .memo-tooltip, /* 주간/야간 팀 번호에도 툴팁 적용 */
+.night-shift.has-memo:hover .memo-tooltip {
     display: block;
 }
 
+/* 설정 버튼 스타일 */
+.setting-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: none;
+    color: white;
+    background-color: #6c757d; /* 회색 계열 */
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.setting-button:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* 설정 모달 스타일 */
+.setting-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.setting-modal.show {
+    display: flex;
+}
+
+.setting-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.setting-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.setting-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.close-setting {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-setting:hover {
+    color: #333;
+}
+
+.setting-body p {
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+}
+
+#shiftOrderDisplay {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+}
+
+#rotateShiftOrder {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+#rotateShiftOrder:hover {
+    background-color: #0056b3;
+}
+
+.setting-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.setting-close {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: #6c757d;
+    color: white;
+}
+
+.setting-close:hover {
+    background-color: #5a6268;
+}
+
+.description {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* 모바일 전용 미디어 쿼리 조정 */
 @media screen and (max-width: 480px) {
-    .memo-content {
-        width: 95%;
+    .container {
+        padding: 0.2rem; /* 패딩 더 줄임 */
+        margin: 0.3rem auto; /* 마진 더 줄임 */
+    }
+
+    h1 {
+        font-size: 1.1rem; /* 폰트 크기 더 줄임 */
+        margin-bottom: 0.6rem;
+    }
+
+    .calendar-controls button {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    #currentMonth {
+        font-size: 0.9rem;
+        min-width: 90px;
+    }
+
+    .legend {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .legend-item {
+        padding: 0.2rem 0.5rem;
+    }
+
+    .legend-item::before {
+        width: 10px;
+        height: 10px;
+    }
+
+    .calendar-header div {
+        padding: 0.2rem;
+        font-size: 0.75rem;
+    }
+
+    .calendar-day {
+        min-height: 60px; /* 최소 높이 더 줄임 */
+        padding: 0.1rem;
+        font-size: 0.75rem;
+    }
+
+    .date-number {
+        font-size: 0.8rem;
+    }
+
+    .holiday-name {
+        font-size: 0.6rem;
+    }
+
+    .shift-info {
+        gap: 0.1rem;
+    }
+
+    .day-shift, .night-shift {
+        padding: 0.1rem;
+        font-size: 0.7rem;
+    }
+
+    .team-buttons-container {
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+        flex-direction: column; /* 모바일에서 세로로 정렬 */
+    }
+
+    .team-buttons {
+        width: 100%;
+        justify-content: center;
+        gap: 0.4rem;
+    }
+
+    .team-button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 55px;
+    }
+
+    .setting-button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        width: 100%; /* 너비 확장 */
+    }
+
+    .memo-content, .setting-content {
         padding: 1rem;
     }
 
     .memo-textarea {
-        min-height: 100px;
+        min-height: 80px;
     }
 
     .memo-tooltip {
-        max-width: 150px;
-        font-size: 0.75rem;
+        max-width: 120px;
+        font-size: 0.7rem;
     }
 }

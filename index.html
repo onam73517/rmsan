@@ -14,6 +14,10 @@
             <div id="currentMonth"></div>
             <button id="nextMonth">&gt;</button>
         </div>
+        <div class="legend">
+            <span class="legend-item day-shift">주간</span>
+            <span class="legend-item night-shift">야간</span>
+        </div>
         <div class="calendar">
             <div class="calendar-header">
                 <div>일</div>
@@ -26,11 +30,14 @@
             </div>
             <div class="calendar-days" id="calendarDays"></div>
         </div>
-        <div class="team-buttons">
-            <button class="team-button" data-team="1">1팀</button>
-            <button class="team-button" data-team="2">2팀</button>
-            <button class="team-button" data-team="3">3팀</button>
-            <button class="team-button" data-team="4">4팀</button>
+        <div class="team-buttons-container">
+            <div class="team-buttons">
+                <button class="team-button" data-team="1">1팀</button>
+                <button class="team-button" data-team="2">2팀</button>
+                <button class="team-button" data-team="3">3팀</button>
+                <button class="team-button" data-team="4">4팀</button>
+            </div>
+            <button id="shiftOrderSettingBtn" class="setting-button">근무 순서 설정</button>
         </div>
     </div>
 
@@ -44,6 +51,24 @@
             <div class="memo-actions">
                 <button class="memo-cancel">취소</button>
                 <button class="memo-save">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="setting-modal" id="settingModal">
+        <div class="setting-content">
+            <div class="setting-header">
+                <h3>근무 순서 설정</h3>
+                <button class="close-setting">&times;</button>
+            </div>
+            <div class="setting-body">
+                <p>근무 순서 (주간/야간):</p>
+                <div id="shiftOrderDisplay"></div>
+                <button id="rotateShiftOrder">순서 변경</button>
+                <p class="description">기준일 (2024년 1월 1일) 주간 근무 순서입니다.<br>버튼을 눌러 순서를 변경하세요.</p>
+            </div>
+            <div class="setting-actions">
+                <button class="setting-close">닫기</button>
             </div>
         </div>
     </div>
