@@ -86,10 +86,12 @@ h1 {
     font-weight: bold;
     color: #495057;
     padding: 1vh 0.5vw;
-    font-size: 3.5vw;
+    font-size: 4.5vw; /* 요일 글자 크기 증가 */
 }
 
-.calendar-header .weekend {
+/* '일'요일과 '토'요일 글씨를 빨간색으로 */
+.calendar-header div:first-child, /* 일요일 */
+.calendar-header div:last-child {  /* 토요일 */
     color: #dc3545;
 }
 
@@ -151,20 +153,19 @@ h1 {
     gap: 0.5vh;
     margin-top: auto;
     width: 100%;
-    /* shift-info 자체의 글자 크기는 없애고, 내부 요소에서 설정 */
 }
 
 .day-shift, .night-shift {
     color: white;
-    padding: 1vh 0.5vw; /* 패딩 크게 */
+    padding: 1vh 0.5vw;
     border-radius: 4px;
     text-align: center;
     width: 100%;
     position: relative;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
     transition: transform 0.1s ease, box-shadow 0.1s ease;
-    font-size: 4vw; /* 글자 크기 더 크게 */
-    line-height: 1.2; /* 줄 간격 조절 */
+    font-size: 4vw;
+    line-height: 1.2;
 }
 
 .day-shift:hover, .night-shift:hover {
@@ -178,7 +179,7 @@ h1 {
 
 .night-shift {
     background-color: #6f42c1;
-    margin-top: 0.8vh; /* 간격 증가 */
+    margin-top: 0.8vh;
 }
 
 .team-buttons-container {
@@ -236,15 +237,15 @@ h1 {
 
 .team-status {
     color: white;
-    padding: 1vh 0.5vw; /* 패딩 크게 */
+    padding: 1vh 0.5vw;
     border-radius: 4px;
     text-align: center;
     width: 100%;
     font-weight: bold;
     margin-top: auto;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-    font-size: 4vw; /* 글자 크기 더 크게 */
-    line-height: 1.2; /* 줄 간격 조절 */
+    font-size: 4vw;
+    line-height: 1.2;
 }
 
 .team-status.주간 { background-color: #FFD700; color: #333; }
@@ -343,11 +344,6 @@ h1 {
     font-size: 4vw;
 }
 
-.memo-save {
-    background-color: #007bff;
-    color: white;
-}
-
 .memo-save:hover {
     background-color: #0056b3;
 }
@@ -412,24 +408,21 @@ h1 {
     display: block;
 }
 
-/* 설정 버튼 스타일을 team-button과 동일하게 변경 */
 .setting-button {
-    /* team-button의 스타일과 일치시키기 위해 그대로 복사 */
     padding: 1.2vh 2.5vw;
     font-size: 3.8vw;
     font-weight: bold;
     border: none;
     color: white;
-    background-color: #6c757d; /* 기본 색상 유지 */
+    background-color: #6c757d;
     cursor: pointer;
     border-radius: 4px;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     transition: all 0.2s ease;
-    min-width: 18vw; /* team-button과 동일한 최소 너비 */
+    min-width: 18vw;
     flex-basis: auto;
     white-space: nowrap;
-    /* team-buttons 내에 함께 배치되도록 margin-top 제거 */
-    margin-top: 0; /* 이전에 있던 margin-top 제거 */
+    margin-top: 0;
 }
 
 .setting-button:hover {
@@ -562,12 +555,12 @@ h1 {
     h1 { font-size: 30px; }
     .calendar-controls button { font-size: 18px; width: 40px; height: 40px; }
     #currentMonth { font-size: 20px; min-width: 150px; }
-    .calendar-header div { font-size: 16px; padding: 10px; }
+    .calendar-header div { font-size: 18px; /* PC에서도 요일 글자 크기 조금 더 키움 */ padding: 10px; }
     .calendar-day { min-height: 80px; font-size: 14px; padding: 5px; }
     .date-number { font-size: 18px; margin-bottom: 5px; }
     .holiday-name { font-size: 13px; margin-bottom: 5px; }
     .shift-info { font-size: 14px; gap: 3px; }
-    .day-shift, .night-shift { font-size: 16px; padding: 5px 8px; /* PC에서도 크기 조금 더 키움 */ }
+    .day-shift, .night-shift { font-size: 16px; padding: 5px 8px; }
     .team-buttons-container { margin-top: 20px; }
     .team-buttons { gap: 10px; }
     .team-button, .setting-button { font-size: 16px; padding: 8px 15px; min-width: 80px; }
