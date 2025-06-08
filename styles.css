@@ -7,18 +7,25 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f2f5;
+    /* 모바일에서 한 화면에 나오도록 추가 */
+    min-height: 100vh; /* 뷰포트 높이의 100%를 최소 높이로 설정 */
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     max-width: 800px;
-    margin: 1rem auto;
+    margin: 0.5rem auto; /* 모바일에서 위아래 여백 줄임 */
     padding: 0.5rem;
+    flex-grow: 1; /* 남은 공간을 차지하여 콘텐츠가 아래로 밀리지 않게 함 */
+    display: flex; /* 내부 요소들을 flex로 정렬 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
 }
 
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* 여백 줄임 */
     font-size: 1.5rem;
 }
 
@@ -70,7 +77,7 @@ h1 {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: hidden; /* 달력 내용이 삐져나가지 않도록 */
 }
 
 .calendar-header {
@@ -118,15 +125,17 @@ h1 {
     background-color: #e8f4ff;
 }
 
+/* 이전/다음 달 날짜 숨기기 */
 .calendar-day.other-month {
-    background-color: #f8f9fa;
-    color: #adb5bd;
+    display: none; /* 이전 달/다음 달 날짜를 완전히 숨김 */
 }
 
-.calendar-day.other-month.weekend {
-    background-color: #ffd5d5;
-    opacity: 0.8;
+/* JavaScript에서 빈 셀을 위해 추가한 클래스 */
+.calendar-day.empty-day {
+    background-color: #f8f9fa; /* 빈 셀의 배경색을 달력 배경과 유사하게 */
+    /* 필요에 따라 border-right, border-bottom을 제거할 수도 있음 */
 }
+
 
 .date-number {
     font-weight: bold;
@@ -145,7 +154,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    margin-top: auto;
+    margin-top: auto; /* 날짜 아래로 밀착 */
 }
 
 .day-shift, .night-shift {
@@ -569,4 +578,4 @@ h1 {
         max-width: 150px;
         font-size: 0.75rem;
     }
-} 
+}

@@ -131,21 +131,17 @@ class WorkSchedule {
         const firstDay = new Date(year, month, 1);
         const lastDay = new Date(year, month + 1, 0);
         
-        const startingDayIndex = firstDay.getDay();
-        const daysInMonth = lastDay.getDate();
+        const startingDayIndex = firstDay.getDay(); // 현재 월의 1일이 시작하는 요일 (0:일, 6:토)
+        const daysInMonth = lastDay.getDate(); // 현재 월의 총 일수
         
         const calendarDays = document.getElementById('calendarDays');
         calendarDays.innerHTML = '';
         
-        // 이전 달의 마지막 날짜들
-        const prevMonthLastDay = new Date(year, month, 0).getDate();
-        for (let i = startingDayIndex - 1; i >= 0; i--) {
-            const dayElement = this.createDayElement(
-                prevMonthLastDay - i,
-                new Date(year, month - 1, prevMonthLastDay - i),
-                true
-            );
-            calendarDays.appendChild(dayElement);
+        // 지난 달의 날짜를 숨기기 위해 빈 셀 추가 (이번 달 1일이 시작하는 요일까지)
+        for (let i = 0; i < startingDayIndex; i++) {
+            const emptyDayElement = document.createElement('div');
+            emptyDayElement.className = 'calendar-day other-month empty-day'; // 'empty-day' 클래스 추가
+            calendarDays.appendChild(emptyDayElement);
         }
         
         // 현재 달의 날짜들
@@ -153,20 +149,19 @@ class WorkSchedule {
             const dayElement = this.createDayElement(
                 day,
                 new Date(year, month, day),
-                false
+                false // 현재 달 날짜
             );
             calendarDays.appendChild(dayElement);
         }
         
-        // 다음 달의 시작 날짜들
-        const remainingDays = 42 - (startingDayIndex + daysInMonth);
-        for (let day = 1; day <= remainingDays; day++) {
-            const dayElement = this.createDayElement(
-                day,
-                new Date(year, month + 1, day),
-                true
-            );
-            calendarDays.appendChild(dayElement);
+        // 다음 달의 날짜를 숨기기 위해 빈 셀 추가 (총 42개 셀을 채우기 위함)
+        const totalDaysRendered = startingDayIndex + daysInMonth;
+        const remainingCells = 42 - totalDaysRendered; // 6주 * 7일 = 42
+        
+        for (let i = 0; i < remainingCells; i++) {
+            const emptyDayElement = document.createElement('div');
+            emptyDayElement.className = 'calendar-day other-month empty-day'; // 'empty-day' 클래스 추가
+            calendarDays.appendChild(emptyDayElement);
         }
     }
 
@@ -179,7 +174,9 @@ class WorkSchedule {
             dayElement.classList.add('weekend');
         }
         
-        if (isOtherMonth) dayElement.classList.add('other-month');
+        if (isOtherMonth) {
+            dayElement.classList.add('other-month');
+        }
         
         const today = new Date();
         if (date.toDateString() === today.toDateString()) {
@@ -344,4 +341,4 @@ class WorkSchedule {
 }
 
 // 달력 초기화
-new WorkSchedule(); 
+new WorkSchedule();
