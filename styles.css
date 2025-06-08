@@ -1,0 +1,572 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 1rem auto;
+    padding: 0.5rem;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.top-controls {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+.calendar-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.calendar-controls button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+}
+
+.calendar-controls button:hover {
+    background-color: #0056b3;
+}
+
+.legend {
+    display: flex;
+    align-items: center;
+}
+
+.legend-item {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.calendar {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.calendar-header div {
+    text-align: center;
+    font-weight: bold;
+    color: #495057;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.calendar-header .weekend {
+    color: #dc3545;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-left: 2px solid #dee2e6;
+    gap: 1px;
+    background-color: #dee2e6;
+}
+
+.calendar-day {
+    background-color: white;
+    padding: 0.3rem;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #dee2e6;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.calendar-day.weekend {
+    background-color: #ffd5d5;
+}
+
+.calendar-day.today {
+    background-color: #e8f4ff;
+}
+
+.calendar-day.other-month {
+    background-color: #f8f9fa;
+    color: #adb5bd;
+}
+
+.calendar-day.other-month.weekend {
+    background-color: #ffd5d5;
+    opacity: 0.8;
+}
+
+.date-number {
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.holiday-name {
+    font-size: 0.7rem;
+    color: #dc3545;
+    margin-bottom: 0.2rem;
+}
+
+.shift-info {
+    font-size: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: auto;
+}
+
+.day-shift, .night-shift {
+    color: white;
+    padding: 0.3rem;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.day-shift:hover, .night-shift:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.day-shift {
+    background-color: #28a745;
+}
+
+.night-shift {
+    background-color: #6f42c1;
+    margin-top: 3px;
+}
+
+#currentMonth {
+    min-width: 120px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.team-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.team-button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+    min-width: 70px;
+}
+
+.team-button[data-team="1"] {
+    background-color: #4CAF50;
+}
+
+.team-button[data-team="1"]:hover {
+    background-color: #3d8b40;
+}
+
+.team-button[data-team="2"] {
+    background-color: #2196F3;
+}
+
+.team-button[data-team="2"]:hover {
+    background-color: #1976D2;
+}
+
+.team-button[data-team="3"] {
+    background-color: #9C27B0;
+}
+
+.team-button[data-team="3"]:hover {
+    background-color: #7B1FA2;
+}
+
+.team-button[data-team="4"] {
+    background-color: #FF9800;
+}
+
+.team-button[data-team="4"]:hover {
+    background-color: #F57C00;
+}
+
+.team-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.team-button.active[data-team="1"] {
+    background-color: #2E7D32;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.team-button.active[data-team="2"] {
+    background-color: #1565C0;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.team-button.active[data-team="3"] {
+    background-color: #6A1B9A;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.team-button.active[data-team="4"] {
+    background-color: #EF6C00;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+.day-shift.highlight, .night-shift.highlight {
+    transform: scale(1.05);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* 팀별 하이라이트 색상 */
+.day-shift.highlight[data-team="1"], .night-shift.highlight[data-team="1"] {
+    background-color: #2E7D32;
+}
+
+.day-shift.highlight[data-team="2"], .night-shift.highlight[data-team="2"] {
+    background-color: #1565C0;
+}
+
+.day-shift.highlight[data-team="3"], .night-shift.highlight[data-team="3"] {
+    background-color: #6A1B9A;
+}
+
+.day-shift.highlight[data-team="4"], .night-shift.highlight[data-team="4"] {
+    background-color: #EF6C00;
+}
+
+.team-status {
+    color: white;
+    padding: 0.3rem;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    margin-top: auto;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 0.8rem;
+}
+
+/* 주간 근무 스타일 */
+.team-status.주간 {
+    background-color: #FFD700;  /* 개나리색 */
+    color: #333;
+}
+
+/* 야간 근무 스타일 */
+.team-status.야간 {
+    background-color: #6c757d;  /* 회색 */
+}
+
+/* 휴무 스타일 */
+.team-status.휴무 {
+    background-color: #dc3545;  /* 빨간색 */
+}
+
+/* 비번 스타일 */
+.team-status.비번 {
+    background-color: #0d6efd;  /* 파란색 */
+}
+
+/* 호버 효과 */
+.team-status:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+}
+
+.shift-info {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+/* 미디어 쿼리 추가 */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 0.3rem;
+        margin: 0.5rem auto;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .calendar-header div {
+        padding: 0.3rem;
+        font-size: 0.8rem;
+    }
+
+    .calendar-day {
+        min-height: 70px;
+        padding: 0.2rem;
+    }
+
+    .date-number {
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .team-status {
+        padding: 0.2rem;
+        font-size: 0.75rem;
+    }
+
+    .team-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+        min-width: 60px;
+        box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    #currentMonth {
+        font-size: 1rem;
+        min-width: 100px;
+    }
+
+    .team-button:hover,
+    .team-button.active[data-team="1"],
+    .team-button.active[data-team="2"],
+    .team-button.active[data-team="3"],
+    .team-button.active[data-team="4"] {
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.6);
+    }
+}
+
+/* 더 작은 화면을 위한 추가 미디어 쿼리 */
+@media screen and (max-width: 360px) {
+    .calendar-day {
+        min-height: 60px;
+    }
+
+    .team-status {
+        font-size: 0.7rem;
+    }
+
+    .holiday-name {
+        font-size: 0.6rem;
+    }
+
+    .team-buttons {
+        gap: 0.3rem;
+    }
+
+    .team-button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 55px;
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .team-button:hover,
+    .team-button.active[data-team="1"],
+    .team-button.active[data-team="2"],
+    .team-button.active[data-team="3"],
+    .team-button.active[data-team="4"] {
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+    }
+}
+
+/* 메모 모달 스타일 */
+.memo-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.memo-modal.show {
+    display: flex;
+}
+
+.memo-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+}
+
+.memo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.memo-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.close-memo {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-memo:hover {
+    color: #333;
+}
+
+.memo-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+    margin-bottom: 1rem;
+}
+
+.memo-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.memo-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.memo-save,
+.memo-cancel {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.memo-save {
+    background-color: #007bff;
+    color: white;
+}
+
+.memo-save:hover {
+    background-color: #0056b3;
+}
+
+.memo-cancel {
+    background-color: #6c757d;
+    color: white;
+}
+
+.memo-cancel:hover {
+    background-color: #5a6268;
+}
+
+/* 메모 표시 스타일 */
+.memo-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    display: none;
+}
+
+.has-memo .memo-indicator {
+    display: block;
+}
+
+.team-status {
+    position: relative;
+    cursor: pointer;
+}
+
+/* 메모 툴팁 */
+.memo-tooltip {
+    position: absolute;
+    background-color: #fff;
+    padding: 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    max-width: 200px;
+    z-index: 100;
+    display: none;
+    font-size: 0.8rem;
+    color: #333;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.team-status:hover .memo-tooltip {
+    display: block;
+}
+
+@media screen and (max-width: 480px) {
+    .memo-content {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    .memo-textarea {
+        min-height: 100px;
+    }
+
+    .memo-tooltip {
+        max-width: 150px;
+        font-size: 0.75rem;
+    }
+} 

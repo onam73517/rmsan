@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>근무 일정표</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>근무 일정표</h1>
+        <div class="calendar-controls">
+            <button id="prevMonth">&lt;</button>
+            <div id="currentMonth"></div>
+            <button id="nextMonth">&gt;</button>
+        </div>
+        <div class="calendar">
+            <div class="calendar-header">
+                <div>일</div>
+                <div>월</div>
+                <div>화</div>
+                <div>수</div>
+                <div>목</div>
+                <div>금</div>
+                <div>토</div>
+            </div>
+            <div class="calendar-days" id="calendarDays"></div>
+        </div>
+        <div class="team-buttons">
+            <button class="team-button" data-team="1">1팀</button>
+            <button class="team-button" data-team="2">2팀</button>
+            <button class="team-button" data-team="3">3팀</button>
+            <button class="team-button" data-team="4">4팀</button>
+        </div>
+    </div>
+
+    <!-- 메모 모달 -->
+    <div class="memo-modal" id="memoModal">
+        <div class="memo-content">
+            <div class="memo-header">
+                <h3>메모 작성</h3>
+                <button class="close-memo">&times;</button>
+            </div>
+            <textarea class="memo-textarea" id="memoText" placeholder="메모를 입력하세요..."></textarea>
+            <div class="memo-actions">
+                <button class="memo-cancel">취소</button>
+                <button class="memo-save">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
