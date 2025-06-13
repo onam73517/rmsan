@@ -160,11 +160,18 @@ class WorkSchedule {
             calendarDays.appendChild(emptyDayElement);
         }
         
+        const today = new Date(); // 오늘 날짜를 가져옴
+        
         for (let day = 1; day <= daysInMonth; day++) {
+            const currentDayDate = new Date(year, month, day);
             const dayElement = this.createDayElement(
                 day,
-                new Date(year, month, day)
+                currentDayDate
             );
+            // 오늘 날짜인 경우에만 today-highlight-blink 클래스 추가
+            if (currentDayDate.toDateString() === today.toDateString()) {
+                dayElement.classList.add('today-highlight-blink');
+            }
             calendarDays.appendChild(dayElement);
         }
         
@@ -187,10 +194,11 @@ class WorkSchedule {
             dayElement.classList.add('weekend');
         }
         
-        const today = new Date();
-        if (date.toDateString() === today.toDateString()) {
-            dayElement.classList.add('today');
-        }
+        // 이 부분은 오늘 날짜 테두리 깜빡임 기능으로 대체되므로 제거
+        // const today = new Date();
+        // if (date.toDateString() === today.toDateString()) {
+        //     dayElement.classList.add('today');
+        // }
         
         const dateNumber = document.createElement('div');
         dateNumber.className = 'date-number';
